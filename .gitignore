@@ -25,5 +25,13 @@ build/Release
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
+
+# NPM Release Files
 dist
+<<<<<<< HEAD
+
+# Webpack files
+demo/bundle.js
+=======
 demo
+>>>>>>> 3d18aee77b2408cf3471eb81a80ac3c71cae7cfe
