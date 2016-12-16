@@ -3,6 +3,7 @@ module.exports = {
   Button: require('./components/Button'),
   ButtonGroup: require('./components/ButtonGroup'),
   Calendar: require('./components/Calendar'),
+  Checkbox: require('./components/Checkbox'),
   Column: require('./components/grid/Column'),
   Container: require('./components/grid/Container'),
   DatePicker: require('./components/DatePicker'),

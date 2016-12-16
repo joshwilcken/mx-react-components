@@ -29,6 +29,10 @@ const Components = React.createClass({
                   displayValue: 'Button Group'
                 },
                 {
+                  value: 'checkbox',
+                  displayValue: 'Checkbox'
+                },
+                {
                   value: 'date-picker',
                   displayValue: 'Date Picker'
                 },
@@ -164,6 +168,7 @@ const Components = React.createClass({
             <h3>Form</h3>
             <Link to='/components/button'>Button</Link>
             <Link to='/components/button-group'>Button Group</Link>
+            <Link to='/components/checkbox'>Checkbox</Link>
             <Link to='/components/date-picker'>Date Picker</Link>
             <Link to='/components/date-picker-full-screen'>Date Picker Full Screen</Link>
             <Link to='/components/date-range-picker'>Date Range Picker</Link>

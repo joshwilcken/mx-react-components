@@ -6,6 +6,7 @@ const BarChart = require('components/BarChartDocs');
 const Button = require('components/ButtonDocs');
 const ButtonGroup = require('components/ButtonGroupDocs');
 const Changelog = require('components/Changelog');
+const Checkbox = require('components/CheckboxDocs');
 const Components = require('components/Components');
 const DatePicker = require('components/DatePickerDocs');
 const DatePickerFullScreen = require('components/DatePickerFullScreenDocs');
@@ -68,6 +69,7 @@ ReactDOM.render((
         <Route component={BarChart} path='bar' />
         <Route component={Button} path='button' />
         <Route component={ButtonGroup} path='button-group' />
+        <Route component={Checkbox} path='checkbox' />
         <Route component={DatePicker} path='date-picker' />
         <Route component={DatePickerFullScreen} path='date-picker-full-screen' />
         <Route component={DateRangePicker} path='date-range-picker' />
