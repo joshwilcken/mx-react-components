@@ -6,20 +6,26 @@ const Markdown = require('components/Markdown');
 
 const MessageBoxDocs = React.createClass({
   render () {
+    const styles = this.styles();
+
     return (
       <div>
         <h1>
-        MESSAGE BOasdgasdgasdX BABY
+          Message Box
+          <label>A component used to display a message to a user.</label>
         </h1>
 
         <h3>Demo</h3>
         <MessageBox
           color={Styles.Colors.PRIMARY}
           expandable={true}
+          icon='attention-solid'
           title='This is a Message'
         >
-          <div>This is some message text</div>
-          <Button>Button baby</Button>
+          <div style={styles.messageBoxContents}>
+            <div style={styles.messageBoxText}>This is some message box text.</div>
+            <Button style={styles.button}>Its Button Time</Button>
+          </div>
         </MessageBox>
         <h3>Usage</h3>
         {/*
@@ -36,16 +42,33 @@ const MessageBoxDocs = React.createClass({
         <h3>Example</h3>
         <Markdown>
           {`
-            <Spin>
-              <Icon
-                size={50}
-                type='sync'
-              />
-            </Spin>
+            <MessageBox
+              color={Styles.Colors.PRIMARY}
+              expandable={true}
+              icon='attention-solid'
+              title='This is a Message'
+            >
+              <div>
+                <div>This is some message box text.</div>
+                <Button>Its Button Time</Button>
+              </div>
+            </MessageBox>
           `}
         </Markdown>
       </div>
     );
+  },
+
+  styles () {
+    return {
+      messageBoxContents: {
+        color: Styles.Colors.CHARCOAL,
+        display: 'flex'
+      },
+      messageBoxText: {
+        flex: 1
+      }
+    }
   }
 });
 

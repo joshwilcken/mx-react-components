@@ -11,7 +11,7 @@ const MessageBox = React.createClass({
     };
   },
 
-  _toggleMessageBoxOpen () {
+  _toggleMessageBox () {
     console.log("click")
     this.setState({
       isOpen: !this.state.isOpen
@@ -22,15 +22,15 @@ const MessageBox = React.createClass({
     const styles = this.styles();
     return (
       <div className='mx-message-box' style={styles.component}>
-        <div style={styles.header}>
+        <div onClick={this._toggleMessageBox} style={styles.header}>
           <div style={styles.leftHeader}>
             <Icon
               elementProps={{
-                onClick: this._toggleMessageBoxOpen
+                onClick: this._toggleMessageBox
               }}
-              size={19}
+              size={20}
               style={Object.assign({}, styles.icon, {marginRight: StyleConstants.Spacing.SMALL})}
-              type={this.state.isOpen ? 'subtract' : 'attention'}
+              type={this.props.icon}
             />
 
             {this.props.title}
@@ -39,7 +39,7 @@ const MessageBox = React.createClass({
           {this.props.expandable &&
             <Icon
               elementProps={{
-                onClick: this._toggleMessageBoxOpen
+                onClick: this._toggleMessageBox
               }}
               size={19}
               style={styles.icon}
@@ -63,13 +63,14 @@ const MessageBox = React.createClass({
     return {
       component: {
         color: StyleConstants.Colors.WHITE,
-        maxWidth: 600,
+        // maxWidth: 600,
         boxSizing: 'border-box'
       },
       header: {
         background: this.props.color,
         display: 'flex',
-        padding: StyleConstants.Spacing.SMALL,
+        cursor: 'pointer',
+        padding: StyleConstants.Spacing.XSMALL,
         // justifyContent: 'center',
         alignItems: 'center'
       },
@@ -82,7 +83,7 @@ const MessageBox = React.createClass({
       },
       children: {
         backgroundColor: StyleConstants.adjustHexOpacity(this.props.color, 0.1),
-        color: StyleConstants.Colors.CHARCOAL
+        padding: StyleConstants.Spacing.SMALL
       }
     }
   }
