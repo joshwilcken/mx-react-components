@@ -28,16 +28,22 @@ const MessageBoxDocs = React.createClass({
           </div>
         </MessageBox>
         <h3>Usage</h3>
-        {/*
-          <h5>children <label>Node</label></h5>
-          <p>An element that you wish to spin.</p>
+        {
+          <h5>children<label>Node</label></h5>
+          <p>If the MessageBox is expandable, children will be the contens of the expanded box.</p>
 
-          <h5>direction <label>String</label></h5>
-          <p>The direction of the spin. Available Options: counterclockwise, clockwise. Default: 'counterclockwise'</p>
+          <h5>color<label>String</label></h5>
+          <p>The primary color of the box.</p>
 
-          <h5>speed <label>Number</label></h5>
-          <p>The time it takes the element to make 1 full rotation in milliseconds. Default: 1000</p>
-        */}
+          <h5>expandable<label>Boolean</label></h5>
+          <p>Whether the message box should expand onClick to display more info. `true` will also display the caret icon</p>
+
+          <h5>icon<label>String</label></h5>
+          <p>The type of icon to display in the upper left of the MessageBox header.</p>
+
+          <h5>title<label>String</label></h5>
+          <p>The text to display in the MessageBox header.</p>
+        }
 
         <h3>Example</h3>
         <Markdown>
