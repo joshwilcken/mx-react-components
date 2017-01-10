@@ -4,6 +4,13 @@ const StyleConstants = require('../constants/Style');
 const Icon = require('../components/Icon');
 
 const MessageBox = React.createClass({
+  propTypes: {
+    children: React.PropTypes.node,
+    color: React.PropTypes.string,
+    expandable: React.PropTypes.bool,
+    icon: React.PropTypes.string,
+    title: React.PropTypes.string
+  },
 
   getInitialState () {
     return {
@@ -12,7 +19,6 @@ const MessageBox = React.createClass({
   },
 
   _toggleMessageBox () {
-    console.log("click")
     this.setState({
       isOpen: !this.state.isOpen
     });
@@ -20,6 +26,7 @@ const MessageBox = React.createClass({
 
   render () {
     const styles = this.styles();
+
     return (
       <div className='mx-message-box' style={styles.component}>
         <div onClick={this._toggleMessageBox} style={styles.header}>
@@ -29,7 +36,7 @@ const MessageBox = React.createClass({
                 onClick: this._toggleMessageBox
               }}
               size={20}
-              style={Object.assign({}, styles.icon, {marginRight: StyleConstants.Spacing.SMALL})}
+              style={Object.assign({}, styles.icon, { marginRight: StyleConstants.Spacing.SMALL })}
               type={this.props.icon}
             />
 
@@ -54,16 +61,14 @@ const MessageBox = React.createClass({
           </div>
         }
 
-
       </div>
-    )
+    );
   },
 
   styles () {
     return {
       component: {
         color: StyleConstants.Colors.WHITE,
-        // maxWidth: 600,
         boxSizing: 'border-box'
       },
       header: {
@@ -71,7 +76,6 @@ const MessageBox = React.createClass({
         display: 'flex',
         cursor: 'pointer',
         padding: StyleConstants.Spacing.XSMALL,
-        // justifyContent: 'center',
         alignItems: 'center'
       },
       leftHeader: {
@@ -85,7 +89,7 @@ const MessageBox = React.createClass({
         backgroundColor: StyleConstants.adjustHexOpacity(this.props.color, 0.1),
         padding: StyleConstants.Spacing.SMALL
       }
-    }
+    };
   }
 });
 

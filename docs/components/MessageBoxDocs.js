@@ -1,6 +1,6 @@
 const React = require('react');
 
-const { Icon, MessageBox, Button, Styles } = require('mx-react-components');
+const { MessageBox, Button, Styles } = require('mx-react-components');
 
 const Markdown = require('components/Markdown');
 
@@ -29,20 +29,22 @@ const MessageBoxDocs = React.createClass({
         </MessageBox>
         <h3>Usage</h3>
         {
-          <h5>children<label>Node</label></h5>
-          <p>If the MessageBox is expandable, children will be the contens of the expanded box.</p>
+          <div>
+            <h5>children<label>Node</label></h5>
+            <p>If the MessageBox is expandable, children will be the contens of the expanded box.</p>
 
-          <h5>color<label>String</label></h5>
-          <p>The primary color of the box.</p>
+            <h5>color<label>String</label></h5>
+            <p>The primary color of the box.</p>
 
-          <h5>expandable<label>Boolean</label></h5>
-          <p>Whether the message box should expand onClick to display more info. `true` will also display the caret icon</p>
+            <h5>expandable<label>Boolean</label></h5>
+            <p>Whether the message box should expand onClick to display more info. `true` will also display the caret icon</p>
 
-          <h5>icon<label>String</label></h5>
-          <p>The type of icon to display in the upper left of the MessageBox header.</p>
+            <h5>icon<label>String</label></h5>
+            <p>The type of icon to display in the upper left of the MessageBox header.</p>
 
-          <h5>title<label>String</label></h5>
-          <p>The text to display in the MessageBox header.</p>
+            <h5>title<label>String</label></h5>
+            <p>The text to display in the MessageBox header.</p>
+          </div>
         }
 
         <h3>Example</h3>
@@ -74,7 +76,7 @@ const MessageBoxDocs = React.createClass({
       messageBoxText: {
         flex: 1
       }
-    }
+    };
   }
 });
 
