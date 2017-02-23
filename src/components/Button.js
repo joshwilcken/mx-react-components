@@ -44,6 +44,7 @@ class Button extends React.Component {
         style={Object.assign({}, styles.component, styles[this.props.type], this.props.style)}
       >
         <div style={styles.children}>
+          XXXbutton children hey
           {(this.props.icon && !this.props.isActive) && (
             <Icon
               elementProps={{ 'aria-hidden': true }}
