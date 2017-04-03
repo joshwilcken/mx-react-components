@@ -181,6 +181,7 @@ const Modal = React.createClass({
   },
 
   render () {
+    console.log("MODAL CONSOLE LOG WHAT UP")
     const styles = this.styles();
 
     return (

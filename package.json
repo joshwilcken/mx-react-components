@@ -2,7 +2,7 @@
   "name": "mx-react-components",
   "version": "5.0.0-rc.67",
   "description": "A collection of generic React UI components",
-  "main": "dist/Index.js",
+  "main": "src/Index.js",
   "scripts": {
     "release": "eslint src && babel src --out-dir dist",
     "dev": "cd docs && yarn && open 'http://localhost:8080' && NODE_ENV=development webpack-dev-server --inline --hot --host 0.0.0.0",
