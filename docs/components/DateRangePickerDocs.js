@@ -3,6 +3,7 @@
 const React = require('react');
 
 const { DateRangePicker } = require('mx-react-components');
+const { DateRangePicker2 } = require('mx-react-components');
 
 const Markdown = require('components/Markdown');
 
@@ -28,6 +29,17 @@ class DateRangePickerDocs extends React.Component {
         </h1>
 
         <h3>Demo</h3>
+          <DateRangePicker2
+            onDateSelect={this._handleDateRangeSelect}
+            placeholderText='Select A Date Range'
+
+            selectedEndDate={this.state.selectedEndDate}
+            selectedStartDate={this.state.selectedStartDate}
+            showDefaultRanges={true}
+
+          />
+
+
         <DateRangePicker
           onDateSelect={this._handleDateRangeSelect}
           selectedEndDate={this.state.selectedEndDate}
