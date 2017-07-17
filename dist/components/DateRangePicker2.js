@@ -224,8 +224,9 @@ var DateRangePicker = function (_React$Component) {
           marginTop: isLargeOrMediumWindowSize ? 10 : 5,
           padding: StyleConstants.Spacing.SMALL,
           position: 'absolute',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          left: isLargeOrMediumWindowSize ? '50%' : 0,
+          right: isLargeOrMediumWindowSize ? 'auto' : 0,
+          transform: isLargeOrMediumWindowSize ? 'translateX(-50%)' : null,
           maxWidth: 650,
           width: window.innerWidth,
           zIndex: 10
