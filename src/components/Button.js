@@ -18,6 +18,8 @@ class Button extends React.Component {
     icon: PropTypes.string,
     isActive: PropTypes.bool,
     onClick: PropTypes.func,
+    onMouseEnter: PropTypes.func,
+    onMouseLeave: PropTypes.func,
     primaryColor: PropTypes.string,
     style: PropTypes.object,
     type: PropTypes.oneOf(buttonTypes)
@@ -58,6 +60,8 @@ class Button extends React.Component {
       <button
         aria-label={this.props['aria-label']}
         onClick={this.props.type === 'disabled' ? null : this.props.onClick}
+        onMouseEnter={this.props.onMouseEnter}
+        onMouseLeave={this.props.onMouseLeave}
         ref={this.props.buttonRef}
         style={Object.assign({}, styles.component, styles[this.props.type], this.props.style)}
       >
