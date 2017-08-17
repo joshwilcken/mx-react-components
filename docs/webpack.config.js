@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 var isProd = (process.env.NODE_ENV === 'production');
 
@@ -39,6 +40,8 @@ module.exports = {
     plugins.push(new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }));
+
+    plugins.push(new BundleAnalyzerPlugin());
 
     if (isProd) {
       // Production specific plugins
