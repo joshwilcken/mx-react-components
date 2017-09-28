@@ -1,6 +1,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 const Radium = require('radium');
+const keycode = require('keycode');
 
 const Icon = require('./Icon');
 
@@ -43,14 +44,17 @@ class ToggleSwitch extends React.Component {
 
     return (
       <div className='toggle-switch-component' style={styles.component}>
-        <input role='checkbox' style={styles.hiddenCheckbox} />
         {this.props.showLabels ? (
           <div className='left-label' onClick={this._handleToggle} style={Object.assign({}, styles.label, this.props.checked ? styles.inactiveLabel : styles.activeLabel)}>{this.props.leftLabel}</div>
         ) : null}
         <div
+          aria-checked={this.props.checked}
           className='toggle-switch-track'
           onClick={this._handleToggle}
+          onKeyUp={e => keycode(e) === 'enter' && this._handleToggle()}
+          role='checkbox'
           style={Object.assign({}, styles.track, styles[this.props.checked + 'Track'])}
+          tabIndex={0}
         >
           {this.props.showIcons ? (
             <span>
@@ -126,14 +130,6 @@ class ToggleSwitch extends React.Component {
       },
       falseTrack: {
         backgroundColor: theme.Colors.GRAY_500
-      },
-
-      hiddenCheckbox: {
-        position: 'absolute',
-        height: 1,
-        width: 1,
-        overflow: 'hidden',
-        clip: 'rect(1px, 1px, 1px, 1px)'
       }
     }, this.props.styles);
   };
