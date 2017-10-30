@@ -1,6 +1,6 @@
-const React = require('react');
-const PropTypes = require('prop-types');
-const Radium = require('radium');
+import { css } from 'glamor';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const Icon = require('./Icon');
 const Spin = require('./Spin');
@@ -34,12 +34,6 @@ class Button extends React.Component {
     deprecatePrimaryColor(this.props);
   }
 
-  _windowSizeIsSmall = (theme) => {
-    const windowSize = StyleUtils.getWindowSize(theme.BreakPoints);
-
-    return windowSize === 'medium' || windowSize === 'large';
-  };
-
   _childIsVisible = child =>
     !child.props || child.props.className !== 'visuallyHidden';
 
@@ -64,7 +58,7 @@ class Button extends React.Component {
         aria-label={this.props['aria-label']}
         onClick={this.props.type === 'disabled' ? null : this.props.onClick}
         ref={this.props.buttonRef}
-        style={Object.assign({}, styles.component, styles[this.props.type], this.props.style)}
+        {...css(Object.assign({}, styles.component, styles[this.props.type], this.props.style))}
       >
         <div style={styles.children}>
           {(this.props.icon && !this.props.isActive) && (
@@ -88,10 +82,10 @@ class Button extends React.Component {
   }
 
   styles = (theme) => {
-    const windowSizeIsSmall = this._windowSizeIsSmall(theme);
+    const windowSizeIsSmall = StyleUtils.getWindowSize(theme.BreakPoints) === 'small';
 
     return {
-      component: Object.assign({
+      component: {
         borderRadius: 2,
         borderStyle: 'solid',
         borderWidth: 1,
@@ -105,7 +99,7 @@ class Button extends React.Component {
         transition: 'all .2s ease-in',
         minWidth: 16,
         position: 'relative'
-      }, this.props.style),
+      },
       children: {
         justifyContent: 'center',
         display: 'flex',
@@ -242,4 +236,4 @@ class Button extends React.Component {
   };
 }
 
-module.exports = Radium(Button);
+module.exports = Button;

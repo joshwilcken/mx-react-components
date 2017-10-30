@@ -1,6 +1,5 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const Radium = require('radium');
 
 const Button = require('./Button');
 
@@ -106,4 +105,4 @@ class ButtonGroup extends React.Component {
   };
 }
 
-module.exports = Radium(ButtonGroup);
+module.exports = ButtonGroup;
