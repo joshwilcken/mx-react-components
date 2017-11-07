@@ -1,7 +1,9 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const PropTypes = require('prop-types');
-const Radium = require('radium');
+// TODO_RADIUM_TO_GLAMOR - JSX refers to Icon, which is a variable. So wanted behaviour unknown.
+
+import { css } from 'glamor';
 
 const Icon = require('./Icon');
 
@@ -224,7 +226,7 @@ class TypeAhead extends React.Component {
   _renderSelectedItems = (styles) => {
     return this.state.selectedItems.map((item, index) => {
       return (
-        <div className='mx-typeahead-selected' key={index} style={styles.itemTag}>
+        <div className='mx-typeahead-selected' key={index} {...css(styles.itemTag)}>
           {item}
           <Icon
             elementProps={{
@@ -234,7 +236,8 @@ class TypeAhead extends React.Component {
             style={styles.removeIcon}
             type='close'
           />
-        </div>);
+        </div>
+      );
     });
   };
 
@@ -243,7 +246,7 @@ class TypeAhead extends React.Component {
       <div
         className='mx-typeahead-option-list'
         ref={(ref) => this.optionList = ref}
-        style={styles.itemList}
+        {...css(styles.itemList)}
       >
         {this.state.selectedItems.length !== this.props.items.length ? (
           <div
@@ -251,7 +254,7 @@ class TypeAhead extends React.Component {
             key='selectAllItem'
             onMouseDown={this._handleSelectAll}
             onMouseOver={this._handleItemMouseOver}
-            style={styles.item}
+            {...css(styles.item)}
           >
             Select All
           </div>
@@ -265,7 +268,7 @@ class TypeAhead extends React.Component {
             key='clearAllItem'
             onMouseDown={this._handleClearAll}
             onMouseOver={this._handleItemMouseOver}
-            style={styles.item}
+            {...css(styles.item)}
           >
             Clear
           </div>
@@ -280,7 +283,9 @@ class TypeAhead extends React.Component {
               key={index}
               onMouseDown={this._handleItemSelect.bind(null, item)}
               onMouseOver={this._handleItemMouseOver}
-              style={Object.assign({}, styles.item, (item === this.state.highlightedValue) && styles.activeItem)}
+              {...css(
+                Object.assign({}, styles.item, (item === this.state.highlightedValue) && styles.activeItem)
+              )}
             >
               {item}
             </div>
@@ -299,7 +304,7 @@ class TypeAhead extends React.Component {
         className='mx-typeahead'
         onBlur={this._handleBlur}
         onFocus={this._handleFocus}
-        style={Object.assign({}, styles.component, this.props.style)}
+        {...css(Object.assign({}, styles.component, this.props.style))}
         tabIndex='0'
       >
         {this._renderSelectedItems(styles)}
@@ -311,12 +316,17 @@ class TypeAhead extends React.Component {
           onKeyDown={this._handleInputKeyDown}
           placeholder={!this.state.selectedItems.length ? this.props.placeholderText : null}
           ref={(ref) => this.input = ref}
-          style={styles.input}
+          {...css(styles.input)}
           type='text'
           value={this.state.searchString}
         />
 
-        <div className='mx-typeahead-option-list-container' style={Object.assign({}, styles.itemListContainer, !this.state.isOpen && { display: 'none' })}>
+        <div
+          className='mx-typeahead-option-list-container'
+          {...css(
+            Object.assign({}, styles.itemListContainer, !this.state.isOpen && { display: 'none' })
+          )}
+        >
           {this._renderItemList(styles)}
         </div>
       </div>
@@ -432,4 +442,4 @@ class TypeAhead extends React.Component {
   };
 }
 
-module.exports = Radium(TypeAhead);
+module.exports = TypeAhead;

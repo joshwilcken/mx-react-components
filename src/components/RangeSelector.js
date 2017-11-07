@@ -1,7 +1,8 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const PropTypes = require('prop-types');
-const Radium = require('radium');
+
+import { css } from 'glamor';
 const _throttle = require('lodash/throttle');
 
 const { themeShape } = require('../constants/App');
@@ -234,21 +235,28 @@ class RangeSelector extends React.Component {
     const styles = this.styles(theme);
 
     return (
-      <div className='mx-rangeselector' style={[styles.component, this.props.style]}>
-        <div className='mx-rangeselector-presets' style={styles.presets}>
+      <div
+        className='mx-rangeselector'
+        {...css([styles.component, this.props.style])}
+      >
+        <div className='mx-rangeselector-presets' {...css(styles.presets)}>
           {this.props.presets.map((preset, i) => {
             return (
               <div
                 className='mx-rangeselector-preset'
                 key={preset.label + i}
                 onClick={this._handlePresetClick.bind(null, preset)}
-                style={styles.preset}
+                {...css(styles.preset)}
               >
                 {preset.label}
               </div>
             );
           })}
-          <div className='mx-rangeselector-preset' onClick={this._handleToggleViews} style={styles.preset} >
+          <div
+            className='mx-rangeselector-preset'
+            onClick={this._handleToggleViews}
+            {...css(styles.preset)}
+          >
             Custom
           </div>
         </div>
@@ -262,13 +270,13 @@ class RangeSelector extends React.Component {
           ref={(ref) => {
             this.rangeSelectorRef = ref;
           }}
-          style={styles.range}
+          {...css(styles.range)}
         >
           {this.props.presets.length ? (
             <div
               className='mx-rangeselector-toggle'
               onClick={this._handleToggleViews}
-              style={styles.showPresets}
+              {...css(styles.showPresets)}
             >
               Groups
             </div>
@@ -276,11 +284,14 @@ class RangeSelector extends React.Component {
           <div
             className='mx-rangeselector-track-holder'
             onMouseDown={this._handleTrackMouseDown}
-            style={styles.trackHolder}
+            {...css(styles.trackHolder)}
           >
-            <div className='mx-rangeselector-track' style={styles.track} />
-            <div className='mx-rangeselector-selected' style={styles.selected}>
-              <div className='mx-rangeselector-selected-label' style={styles.selectedLabel}>
+            <div className='mx-rangeselector-track' {...css(styles.track)} />
+            <div className='mx-rangeselector-selected' {...css(styles.selected)}>
+              <div
+                className='mx-rangeselector-selected-label'
+                {...css(styles.selectedLabel)}
+              >
                 {this.state.selectedLabel}
               </div>
             </div>
@@ -289,9 +300,12 @@ class RangeSelector extends React.Component {
             className='mx-rangeselector-lower-toggle'
             onMouseDown={this._handleDragStart.bind(null, 'Lower')}
             onTouchStart={this._handleDragStart.bind(null, 'Lower')}
-            style={styles.lowerToggle}
+            {...css(styles.lowerToggle)}
           >
-            <label className='mx-rangeselector-lower-toggle-label' style={styles.lowerToggleLabel}>
+            <label
+              className='mx-rangeselector-lower-toggle-label'
+              {...css(styles.lowerToggleLabel)}
+            >
               {this.props.formatter(this.state.lowerValue)}
             </label>
           </div>
@@ -299,9 +313,12 @@ class RangeSelector extends React.Component {
             className='mx-rangeselector-upper-toggle'
             onMouseDown={this._handleDragStart.bind(null, 'Upper')}
             onTouchStart={this._handleDragStart.bind(null, 'Upper')}
-            style={styles.upperToggle}
+            {...css(styles.upperToggle)}
           >
-            <label className='mx-rangeselector-upper-toggle-label' style={styles.upperToggleLabel}>
+            <label
+              className='mx-rangeselector-upper-toggle-label'
+              {...css(styles.upperToggleLabel)}
+            >
               {this.props.formatter(this.state.upperValue)}
             </label>
           </div>
@@ -429,4 +446,4 @@ class RangeSelector extends React.Component {
   };
 }
 
-module.exports = Radium(RangeSelector);
+module.exports = RangeSelector;

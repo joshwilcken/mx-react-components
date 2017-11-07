@@ -1,6 +1,9 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const Radium = require('radium');
+// TODO_RADIUM_TO_GLAMOR - JSX refers to Icon, which is a variable. So wanted behaviour unknown.
+// TODO_RADIUM_TO_GLAMOR - JSX refers to Icon, which is a variable. So wanted behaviour unknown.
+
+import { css } from 'glamor';
 
 const Icon = require('./Icon');
 
@@ -42,14 +45,20 @@ class ToggleSwitch extends React.Component {
     const styles = this.styles(theme);
 
     return (
-      <div className='toggle-switch-component' style={styles.component}>
+      <div className='toggle-switch-component' {...css(styles.component)}>
         {this.props.showLabels ? (
-          <div className='left-label' onClick={this._handleToggle} style={Object.assign({}, styles.label, this.props.checked ? styles.inactiveLabel : styles.activeLabel)}>{this.props.leftLabel}</div>
+          <div
+            className='left-label'
+            onClick={this._handleToggle}
+            {...css(
+              Object.assign({}, styles.label, this.props.checked ? styles.inactiveLabel : styles.activeLabel)
+            )}
+          >{this.props.leftLabel}</div>
         ) : null}
         <div
           className='toggle-switch-track'
           onClick={this._handleToggle}
-          style={Object.assign({}, styles.track, styles[this.props.checked + 'Track'])}
+          {...css(Object.assign({}, styles.track, styles[this.props.checked + 'Track']))}
         >
           {this.props.showIcons ? (
             <span>
@@ -57,10 +66,16 @@ class ToggleSwitch extends React.Component {
               <Icon className='false-icon' style={Object.assign({}, styles.icon, styles.falseIcon)} type={this.props.falseIcon} />
             </span>
           ) : null}
-          <div className='toggle-switch-toggle' style={styles.toggle} />
+          <div className='toggle-switch-toggle' {...css(styles.toggle)} />
         </div>
         {this.props.showLabels ? (
-          <div className='right-label' onClick={this._handleToggle} style={Object.assign({}, styles.label, this.props.checked ? styles.activeLabel : styles.inactiveLabel)}>{this.props.rightLabel}</div>
+          <div
+            className='right-label'
+            onClick={this._handleToggle}
+            {...css(
+              Object.assign({}, styles.label, this.props.checked ? styles.activeLabel : styles.inactiveLabel)
+            )}
+          >{this.props.rightLabel}</div>
         ) : null}
       </div>
     );
@@ -132,4 +147,4 @@ class ToggleSwitch extends React.Component {
   };
 }
 
-module.exports = Radium(ToggleSwitch);
+module.exports = ToggleSwitch;

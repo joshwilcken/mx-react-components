@@ -1,5 +1,6 @@
 const PropTypes = require('prop-types');
-const Radium = require('radium');
+
+import { css } from 'glamor';
 const React = require('react');
 
 const { themeShape } = require('../../constants/App');
@@ -30,7 +31,7 @@ class Tab extends React.Component {
       style = Object.assign({}, style, styles.activeTab, this.props.styles.activeTab);
 
     return (
-      <span onClick={this.props.onClick} style={style}>
+      <span onClick={this.props.onClick} {...css(style)}>
         {this.props.children}
       </span>
     );
@@ -65,4 +66,4 @@ class Tab extends React.Component {
   }
 }
 
-module.exports = Radium(Tab);
+module.exports = Tab;

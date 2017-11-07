@@ -1,6 +1,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const Radium = require('radium');
+
+import { css } from 'glamor';
 
 class RajaIcon extends React.Component {
   static propTypes = {
@@ -660,7 +661,7 @@ class RajaIcon extends React.Component {
       <svg
         {...elementProps}
         preserveAspectRatio='xMidYMid meet'
-        style={[styles, this.props.style]}
+        {...css([styles, this.props.style])}
         viewBox='0 0 1024 1024'
       >
         {this._renderSvg()}
@@ -669,4 +670,4 @@ class RajaIcon extends React.Component {
   }
 }
 
-module.exports = Radium(RajaIcon);
+module.exports = RajaIcon;

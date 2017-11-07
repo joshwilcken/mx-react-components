@@ -1,6 +1,8 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const Radium = require('radium');
+// TODO_RADIUM_TO_GLAMOR - JSX refers to Icon, which is a variable. So wanted behaviour unknown.
+
+import { css } from 'glamor';
 
 const Icon = require('./Icon');
 
@@ -78,7 +80,10 @@ class SelectFullScreen extends React.Component {
 
   _optionFormatter = (option, styles) => {
     return (
-      <div key={option.displayValue + option.value + '_value'} style={styles.option}>
+      <div
+        key={option.displayValue + option.value + '_value'}
+        {...css(styles.option)}
+      >
         {option.displayValue}
       </div>
     );
@@ -87,20 +92,25 @@ class SelectFullScreen extends React.Component {
   _renderOptions = (styles) => {
     if (this.state.isOpen) {
       return (
-        <div style={[styles.optionsScrim, this.props.isFixed && { position: 'fixed' }]}>
-          <div onClick={this._handleCloseClick} style={styles.close}>
+        <div
+          {...css([styles.optionsScrim, this.props.isFixed && { position: 'fixed' }])}
+        >
+          <div onClick={this._handleCloseClick} {...css(styles.close)}>
             <Icon
               size={20}
               style={styles.closeIcon}
               type={this.props.closeIcon}
             />
-            <div style={styles.closeText}>ESC</div>
+            <div {...css(styles.closeText)}>ESC</div>
           </div>
-          <div style={styles.content}>
-            <div style={styles.optionsHeader}>
+          <div {...css(styles.content)}>
+            <div {...css(styles.optionsHeader)}>
               {this.props.optionsHeaderText}
             </div>
-            <div className='mx-select-full-screen-options' style={[styles.optionsWrapper, this.props.optionsStyle]}>
+            <div
+              className='mx-select-full-screen-options'
+              {...css([styles.optionsWrapper, this.props.optionsStyle])}
+            >
               {this.props.options.map(option => {
                 return (
                   <div
@@ -127,12 +137,15 @@ class SelectFullScreen extends React.Component {
     const selected = this.state.selected || this.props.selected || { displayValue: this.props.placeholderText, value: '' };
 
     return (
-      <div className='mx-select-full-screen' style={[styles.component, this.props.style]}>
+      <div
+        className='mx-select-full-screen'
+        {...css([styles.component, this.props.style])}
+      >
         <div
           className='mx-select-full-screen-selected'
           key='selected'
           onClick={this._handleClick}
-          style={this.props.selectedStyle}
+          {...css(this.props.selectedStyle)}
         >
           {selected.displayValue}
         </div>
@@ -211,4 +224,4 @@ class SelectFullScreen extends React.Component {
   }
 }
 
-module.exports = Radium(SelectFullScreen);
+module.exports = SelectFullScreen;

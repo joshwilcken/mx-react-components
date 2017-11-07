@@ -1,6 +1,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const Radium = require('radium');
+
+import { css } from 'glamor';
 
 const d3 = require('d3');
 const moment = require('moment');
@@ -512,11 +513,14 @@ class TimeBasedLineChart extends React.Component {
         const value = this.state.hoveredDataPoint[item.key];
 
         return (
-          <div key={'details-' + index} style={this.state.styles.hoveredDataPointDetail}>
-            <div style={this.state.styles.hoveredDataPointLabel}>
+          <div
+            key={'details-' + index}
+            {...css(this.state.styles.hoveredDataPointDetail)}
+          >
+            <div {...css(this.state.styles.hoveredDataPointLabel)}>
               {item.label}
             </div>
-            <div style={this.state.styles.hoveredDataPointValue}>
+            <div {...css(this.state.styles.hoveredDataPointValue)}>
               {value || value === 0 ? this._getFormattedValue(value, item.type, item.format) : 'N/A'}
             </div>
           </div>
@@ -532,7 +536,10 @@ class TimeBasedLineChart extends React.Component {
     const { adjustedHeight, adjustedWidth, hoveredDataPoint, lineColor, margin } = this.state;
 
     return (
-      <div className='mx-time-based-line-chart' style={Object.assign({}, this.state.styles.component, { height, width })}>
+      <div
+        className='mx-time-based-line-chart'
+        {...css(Object.assign({}, this.state.styles.component, { height, width }))}
+      >
         {data.length ? (
           <div>
             <svg
@@ -661,17 +668,17 @@ class TimeBasedLineChart extends React.Component {
                 xScaleValueFunction={this._getXScaleValue}
               />
             </svg>
-            <div style={this.state.styles.hoveredDataPointDetails}>
+            <div {...css(this.state.styles.hoveredDataPointDetails)}>
               {this._renderHoveredDataPointDetails()}
             </div>
           </div>
          ) : (
            zeroState && zeroState ||
-             <div style={this.state.styles.zeroState}>No Data Found</div>
+             <div {...css(this.state.styles.zeroState)}>No Data Found</div>
          )}
       </div>
     );
   }
 }
 
-module.exports = Radium(TimeBasedLineChart);
+module.exports = TimeBasedLineChart;

@@ -1,7 +1,8 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const PropTypes = require('prop-types');
-const Radium = require('radium');
+
+import { css } from 'glamor';
 const _merge = require('lodash/merge');
 const browser = require('bowser');
 
@@ -96,7 +97,7 @@ class SimpleSlider extends React.Component {
     const { disabled } = this.props;
 
     return (
-      <div style={styles.component}>
+      <div {...css(styles.component)}>
         <div
           onMouseLeave={disabled ? null : this._handleDragEnd}
           onMouseMove={disabled ? null : this._handleDragging}
@@ -106,19 +107,19 @@ class SimpleSlider extends React.Component {
           ref={(ref) => {
             this.rangeSelectorRef = ref;
           }}
-          style={styles.range}
+          {...css(styles.range)}
         >
           <div
             onMouseDown={disabled ? null : this._handleMouseEvents}
-            style={styles.trackHolder}
+            {...css(styles.trackHolder)}
           >
-            <div style={styles.track} />
-            <div style={styles.selected} />
+            <div {...css(styles.track)} />
+            <div {...css(styles.selected)} />
           </div>
           <div
             onMouseDown={disabled ? null : this._handleDragStart}
             onTouchStart={disabled ? null : this._handleDragStart}
-            style={styles.toggle}
+            {...css(styles.toggle)}
           />
         </div>
       </div>
@@ -173,4 +174,4 @@ class SimpleSlider extends React.Component {
   };
 }
 
-module.exports = Radium(SimpleSlider);
+module.exports = SimpleSlider;

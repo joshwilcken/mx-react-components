@@ -1,6 +1,9 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const Radium = require('radium');
+// TODO_RADIUM_TO_GLAMOR - JSX refers to Icon, which is a variable. So wanted behaviour unknown.
+// TODO_RADIUM_TO_GLAMOR - JSX refers to Icon, which is a variable. So wanted behaviour unknown.
+
+import { css } from 'glamor';
 const keycode = require('keycode');
 
 const moment = require('moment');
@@ -271,24 +274,23 @@ class DateRangePicker extends React.Component {
     const theme = StyleUtils.mergeTheme(this.props.theme, this.props.primaryColor);
     const isLargeOrMediumWindowSize = this._isLargeOrMediumWindowSize(theme);
     const styles = this.styles(theme, isLargeOrMediumWindowSize);
-    const shouldShowCalendarIcon = StyleUtils.getWindowSize(theme.BreakPoints) !== 'small';
 
     return (
-      <div style={styles.component}>
+      <div {...css(styles.component)}>
         <a
           onClick={this._toggleSelectionPane}
           onKeyUp={(e) => keycode(e) === 'enter' && this._toggleSelectionPane()}
-          style={styles.selectedDateWrapper}
+          {...css(styles.selectedDateWrapper)}
           tabIndex={0}
         >
-          {shouldShowCalendarIcon ? (
+          {isLargeOrMediumWindowSize ? (
             <Icon
               size={20}
               style={styles.selectedDateIcon}
               type='calendar'
             />
           ) : null}
-          <div style={styles.selectedDateText}>
+          <div {...css(styles.selectedDateText)}>
             {this.props.selectedStartDate && this.props.selectedEndDate ? (
               <div>
                 <span>{moment.unix(this.props.selectedStartDate).format(this._getDateFormat(isLargeOrMediumWindowSize))}</span>
@@ -303,9 +305,9 @@ class DateRangePicker extends React.Component {
             type={this.state.showSelectionPane ? 'caret-up' : 'caret-down'}
           />
         </a>
-        <div style={styles.container}>
+        <div {...css(styles.container)}>
           <div>
-            <div style={styles.optionsWrapper}>
+            <div {...css(styles.optionsWrapper)}>
               {!this.state.showCalendar && (
                 <div>
                   {this.props.showDefaultRanges &&
@@ -331,13 +333,13 @@ class DateRangePicker extends React.Component {
 
               {(this.state.showCalendar || isLargeOrMediumWindowSize) && (
                 <div>
-                  <div style={styles.calendarWrapper}>
-                    <div style={styles.calendarHeader}>
+                  <div {...css(styles.calendarWrapper)}>
+                    <div {...css(styles.calendarHeader)}>
                       <MonthSelector currentDate={this.state.currentDate} setCurrentDate={(currentDate) => this.setState({ currentDate, focusedDay: currentDate })} />
                       <YearSelector currentDate={this.state.currentDate} setCurrentDate={(currentDate) => this.setState({ currentDate, focusedDay: currentDate })} />
 
                     </div>
-                    <div style={styles.calendarWeek}>
+                    <div {...css(styles.calendarWeek)}>
                       {[{ label: 'S', value: 'Sunday' },
                         { label: 'M', value: 'Monday' },
                         { label: 'T', value: 'Tuesday' },
@@ -346,7 +348,7 @@ class DateRangePicker extends React.Component {
                         { label: 'F', value: 'Friday' },
                         { label: 'S', value: 'Saturday' }].map((day) => {
                           return (
-                            <div key={day.value} style={styles.calendarWeekDay}>
+                            <div key={day.value} {...css(styles.calendarWeekDay)}>
                               {day.label}
                             </div>
                           );
@@ -367,7 +369,7 @@ class DateRangePicker extends React.Component {
                       styles={styles}
                     />
                     {!isLargeOrMediumWindowSize && (
-                      <div style={styles.applyButton}>
+                      <div {...css(styles.applyButton)}>
                         <Button
                           onClick={() => this.setState({ showCalendar: false })}
                           theme={theme}
@@ -384,7 +386,7 @@ class DateRangePicker extends React.Component {
           </div>
         </div>
         {(this.state.showSelectionPane) ? (
-          <div onClick={this._handleScrimClick} style={styles.scrim} />
+          <div onClick={this._handleScrimClick} {...css(styles.scrim)} />
         ) : null }
       </div>
     );
@@ -558,4 +560,4 @@ class DateRangePicker extends React.Component {
   };
 }
 
-module.exports = Radium(DateRangePicker);
+module.exports = DateRangePicker;

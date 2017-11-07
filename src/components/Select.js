@@ -1,7 +1,12 @@
 const _isEqual = require('lodash/isEqual');
 const keycode = require('keycode');
 const PropTypes = require('prop-types');
-const Radium = require('radium');
+// TODO_RADIUM_TO_GLAMOR - JSX refers to Listbox, which is a variable. So wanted behaviour unknown.
+// TODO_RADIUM_TO_GLAMOR - JSX refers to Option, which is a variable. So wanted behaviour unknown.
+// TODO_RADIUM_TO_GLAMOR - JSX refers to Icon, which is a variable. So wanted behaviour unknown.
+// TODO_RADIUM_TO_GLAMOR - JSX refers to Icon, which is a variable. So wanted behaviour unknown.
+
+import { css } from 'glamor';
 const React = require('react');
 const ReactDOM = require('react-dom');
 
@@ -128,7 +133,7 @@ class Select extends React.Component {
         <div
           className='mx-select-scrim'
           onClick={haltEvent(this._close)}
-          style={[styles.scrim, this.props.scrimStyle]}
+          {...css([styles.scrim, this.props.scrimStyle])}
         />
       );
     } else {
@@ -140,7 +145,7 @@ class Select extends React.Component {
     if (this.state.isOpen) {
       if (this.props.children) {
         return (
-          <div className='mx-select-options' style={styles.options}>
+          <div className='mx-select-options' {...css(styles.options)}>
             {this.props.children}
           </div>
         );
@@ -174,7 +179,7 @@ class Select extends React.Component {
                       type={option.icon}
                     />
                   ) : null}
-                  <div style={styles.optionText}>{option.displayValue}</div>
+                  <div {...css(styles.optionText)}>{option.displayValue}</div>
                   {_isEqual(option, this.state.selected) ? <Icon size={20} type='check' /> : null }
                 </Option>
               );
@@ -193,16 +198,20 @@ class Select extends React.Component {
     const selected = this.state.selected || this.props.selected || { displayValue: this.props.placeholderText, value: '' };
 
     return (
-      <div className='mx-select' style={Object.assign({}, this.props.style, { position: 'relative' })}>
-        <div className='mx-select-custom'
+      <div
+        className='mx-select'
+        {...css(Object.assign({}, this.props.style, { position: 'relative' }))}
+      >
+        <div
+          className='mx-select-custom'
           onClick={haltEvent(this._open)}
           onKeyDown={this._handleKeyDown}
           ref={ref => this.component = ref}
-          style={styles.component}
+          {...css(styles.component)}
           tabIndex='0'
         >
           {this._renderScrim(styles)}
-          <div className='mx-select-selected' key='selected' style={styles.selected}>
+          <div className='mx-select-selected' key='selected' {...css(styles.selected)}>
             {selected.icon ? (
               <Icon
                 size={20}
@@ -210,7 +219,7 @@ class Select extends React.Component {
                 type={selected.icon}
               />
             ) : null}
-            <div style={styles.optionText}>{selected.displayValue}</div>
+            <div {...css(styles.optionText)}>{selected.displayValue}</div>
             <Icon
               size={20}
               type={this.state.isOpen ? 'caret-up' : 'caret-down'}
@@ -316,4 +325,4 @@ class Select extends React.Component {
 }
 
 
-module.exports = Radium(Select);
+module.exports = Select;

@@ -1,7 +1,8 @@
 const _isEqual = require('lodash/isEqual');
 const React = require('react');
 const PropTypes = require('prop-types');
-const Radium = require('radium');
+
+import { css } from 'glamor';
 const d3 = require('d3');
 
 const { themeShape } = require('../constants/App');
@@ -312,10 +313,7 @@ class DonutChart extends React.Component {
     if (this.props.showDataLabel) {
       if (this.props.children) {
         return (
-          <div
-            className='mx-donutchart-data'
-            style={styles.center}
-          >
+          <div className='mx-donutchart-data' {...css(styles.center)}>
             {this.props.children}
           </div>
         );
@@ -326,14 +324,11 @@ class DonutChart extends React.Component {
         const value = this.state.activeIndex === -1 ? this.props.formatter(this.props.defaultLabelValue) : this.props.formatter(activeDataSet.value);
 
         return (
-          <div
-            className='mx-donutchart-data'
-            style={styles.center}
-          >
-            <div className='mx-donutchart-data-value' style={[styles.value, { color }]}>
+          <div className='mx-donutchart-data' {...css(styles.center)}>
+            <div className='mx-donutchart-data-value' {...css([styles.value, { color }])}>
               {value}
             </div>
-            <div className='mx-donutchart-data-label' style={styles.label}>
+            <div className='mx-donutchart-data-label' {...css(styles.label)}>
               {text}
             </div>
           </div>
@@ -356,7 +351,9 @@ class DonutChart extends React.Component {
     return (
       <div
         className='mx-donutchart'
-        style={[styles.component, this.props.style, { fontSize, height: this.props.height, width: this.props.width }]}
+        {...css(
+          [styles.component, this.props.style, { fontSize, height: this.props.height, width: this.props.width }]
+        )}
       >
         {this._renderDataLabel(styles, colors)}
         <svg
@@ -399,4 +396,4 @@ class DonutChart extends React.Component {
   };
 }
 
-module.exports = Radium(DonutChart);
+module.exports = DonutChart;

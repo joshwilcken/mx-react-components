@@ -1,5 +1,7 @@
 const PropTypes = require('prop-types');
-const Radium = require('radium');
+// TODO_RADIUM_TO_GLAMOR - JSX refers to Icon, which is a variable. So wanted behaviour unknown.
+
+import { css } from 'glamor';
 const keycode = require('keycode');
 const React = require('react');
 const Icon = require('../Icon');
@@ -13,7 +15,7 @@ class DefaultRanges extends React.Component {
     const { defaultRanges, handleDefaultRangeSelection, primaryColor, selectedStartDate, selectedEndDate, styles } = this.props;
 
     return (
-      <div style={styles.rangeOptions}>
+      <div {...css(styles.rangeOptions)}>
 
         {defaultRanges.map((range, index) => (
           <div
@@ -28,7 +30,7 @@ class DefaultRanges extends React.Component {
                 this.setState({ selectedOption: index });
               }
             }}
-            style={styles.rangeOption}
+            {...css(styles.rangeOption)}
             tabIndex={0}
           >
             <div>
@@ -64,4 +66,4 @@ DefaultRanges.propTypes = {
   })
 };
 
-module.exports = Radium(DefaultRanges);
+module.exports = DefaultRanges;

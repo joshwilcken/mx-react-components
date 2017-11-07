@@ -1,6 +1,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const Radium = require('radium');
+
+import { css } from 'glamor';
 const _uniqueId = require('lodash/uniqueId');
 const _merge = require('lodash/merge');
 
@@ -90,11 +91,19 @@ class DisplayInput extends React.Component {
 
     return (
       <Container>
-        <div style={Object.assign({}, styles.wrapper, this.props.isFocused ? styles.wrapperFocus : {})}>
+        <div
+          {...css(
+            Object.assign({}, styles.wrapper, this.props.isFocused ? styles.wrapperFocus : {})
+          )}
+        >
           <Row>
             {this.props.label ? (
               <Column span={labelColumn}>
-                <label htmlFor={this._inputId} id={this._labelId} style={Object.assign({}, styles.labelText, this.props.labelStyle)}>
+                <label
+                  htmlFor={this._inputId}
+                  id={this._labelId}
+                  {...css(Object.assign({}, styles.labelText, this.props.labelStyle))}
+                >
                   {this.props.label}
                 </label>
               </Column>
@@ -102,17 +111,17 @@ class DisplayInput extends React.Component {
 
             <Column relative={!hasChildren} span={inputColumn}>
               {hasChildren ? (
-                <div style={Object.assign({}, styles.children, this.props.childrenStyle)}>
+                <div {...css(Object.assign({}, styles.children, this.props.childrenStyle))}>
                   {this.props.children}
                 </div>
               ) : (
-                <div style={styles.inputWrapper}>
+                <div {...css(styles.inputWrapper)}>
                   <input
                     {...elementProps}
                     aria-labelledby={this.props.label ? this._labelId : null}
                     id={this._inputId}
                     key='input'
-                    style={styles.input}
+                    {...css(styles.input)}
                   />
                 </div>
               )}
@@ -120,7 +129,7 @@ class DisplayInput extends React.Component {
 
             {showHint ? (
               <Column span={twoWidthColumn}>
-                <div style={styles.hint}>
+                <div {...css(styles.hint)}>
                   {this.props.showHint && !this.props.status ? (<div>{this.props.hint}</div>) : null}
                 </div>
               </Column>
@@ -131,8 +140,8 @@ class DisplayInput extends React.Component {
         <Row>
           {this.props.status ? (
             <Column offset={twoWidthColumn} span={statusColumn} >
-              <div style={styles.status}>
-                <div style={styles[this.props.status.type]}>{this.props.status.message}</div>
+              <div {...css(styles.status)}>
+                <div {...css(styles[this.props.status.type])}>{this.props.status.message}</div>
               </div>
             </Column>
           ) : null}
@@ -233,4 +242,4 @@ class DisplayInput extends React.Component {
   };
 }
 
-module.exports = Radium(DisplayInput);
+module.exports = DisplayInput;

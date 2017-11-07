@@ -1,6 +1,10 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const Radium = require('radium');
+// TODO_RADIUM_TO_GLAMOR - JSX refers to Listbox, which is a variable. So wanted behaviour unknown.
+// TODO_RADIUM_TO_GLAMOR - JSX refers to Option, which is a variable. So wanted behaviour unknown.
+// TODO_RADIUM_TO_GLAMOR - JSX refers to Icon, which is a variable. So wanted behaviour unknown.
+
+import { css } from 'glamor';
 const keycode = require('keycode');
 const _merge = require('lodash/merge');
 
@@ -73,7 +77,7 @@ class SimpleSelect extends React.Component {
     const styles = this.styles(theme);
 
     return (
-      <div style={styles.component}>
+      <div {...css(styles.component)}>
         <Listbox
           aria-label={this.props['aria-label']}
           style={styles.menu}
@@ -92,13 +96,13 @@ class SimpleSelect extends React.Component {
                   {item.icon ? (
                     <Icon size={this.props.iconSize || 20} style={styles.icon} type={item.icon} />
                   ) : null}
-                  <div style={styles.text}>{item.text}</div>
+                  <div {...css(styles.text)}>{item.text}</div>
                 </Option>
               );
             })
           )}
         </Listbox>
-        <div onClick={this.props.onScrimClick} style={styles.scrim} />
+        <div onClick={this.props.onScrimClick} {...css(styles.scrim)} />
       </div>
     );
   }
@@ -159,4 +163,4 @@ class SimpleSelect extends React.Component {
   };
 }
 
-module.exports = Radium(SimpleSelect);
+module.exports = SimpleSelect;

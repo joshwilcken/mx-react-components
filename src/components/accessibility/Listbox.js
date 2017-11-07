@@ -1,6 +1,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const Radium = require('radium');
+
+import Radium from 'radium';
 const keycode = require('keycode');
 const _findIndex = require('lodash/findIndex');
 

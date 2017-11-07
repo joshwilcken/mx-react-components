@@ -1,6 +1,10 @@
 const React = require('react');
 const PropTypes = require('prop-types');
-const Radium = require('radium');
+// TODO_RADIUM_TO_GLAMOR - JSX refers to Icon, which is a variable. So wanted behaviour unknown.
+// TODO_RADIUM_TO_GLAMOR - JSX refers to Icon, which is a variable. So wanted behaviour unknown.
+// TODO_RADIUM_TO_GLAMOR - JSX refers to Icon, which is a variable. So wanted behaviour unknown.
+
+import { css } from 'glamor';
 const moment = require('moment');
 
 const Icon = require('./Icon');
@@ -173,16 +177,18 @@ class DatePickerFullScreen extends React.Component {
         <div
           key={startDate.month() + '-' + startDate.date()}
           onClick={!noSelectDay ? this._handleDateSelect.bind(null, startDate.unix()) : null}
-          style={[
+          {...css([
             styles.calendarDay,
             (!noSelectDay && isCurrentMonth) && styles.currentMonth
-          ]}
+          ])}
         >
           <div
             key={startDate.format('DDDD')}
-            style={[styles.calendarDayContent, noSelectDay ? styles.calendarDayDisabled : isCurrentDay && styles.currentDay]}
+            {...css(
+              Object.assign({}, styles.calendarDayContent, noSelectDay ? styles.calendarDayDisabled : isCurrentDay && styles.currentDay)
+            )}
           >
-            <div style={styles.calendarDayText}>{startDate.date()}</div>
+            <div {...css(styles.calendarDayText)}>{startDate.date()}</div>
           </div>
         </div>
       );
@@ -209,11 +215,13 @@ class DatePickerFullScreen extends React.Component {
             onBlur={this._handleInputBlur}
             onChange={this._handleInputChange}
             onClick={this._toggleCalendar}
-            style={[styles.input, this.props.inputStyle, hidePlaceholder && { backgroundColor: theme.Colors.WHITE }]}
+            {...css(
+              Object.assign(styles.input, this.props.inputStyle, hidePlaceholder && { backgroundColor: theme.Colors.WHITE })
+            )}
             type='text'
             value={this.state.inputValue}
           />
-          <div style={[styles.placeholderText, this.props.placeholderTextStyle]}>
+          <div {...css([styles.placeholderText, this.props.placeholderTextStyle])}>
             {this.props.placeholderText || 'Select A Date'}
           </div>
         </div>
@@ -223,7 +231,7 @@ class DatePickerFullScreen extends React.Component {
         <div
           key='selectedDate'
           onClick={this._toggleCalendar}
-          style={styles.selectedDate}
+          {...css(styles.selectedDate)}
         >
           {this.state.inputValue}
         </div>
@@ -234,7 +242,7 @@ class DatePickerFullScreen extends React.Component {
   _renderTitle = (styles) => {
     if (this.props.title) {
       return (
-        <div key='title' style={styles.title}>
+        <div key='title' {...css(styles.title)}>
           {this.props.title}
         </div>
       );
@@ -259,39 +267,48 @@ class DatePickerFullScreen extends React.Component {
     return (
       <div
         className='mx-date-picker-full-screen'
-        style={[styles.component, styles.clearFix, this.props.style]}
+        {...css(Object.assign(styles.component, styles.clearFix, this.props.style))}
         tabIndex='0'
       >
         <div
           className='mx-date-picker-full-screen-selected-date'
           key='selectedDateWrapper'
-          style={[
+          {...css([
             styles.selectedDateWrapper,
             this.props.selectedDateWrapperStyle
-          ]}
+          ])}
         >
           {this._renderSelectedDate(styles, theme)}
         </div>
         <div
           className='mx-date-picker-full-screen-calendar-scrim'
           key='calendarModal'
-          style={[
+          {...css([
             styles.calendarModal,
             this.state.showCalendar && styles.calendarShow,
             this.props.isFixed && { position: 'fixed' }
-          ]}
+          ])}
         >
-          <div onClick={this._handleCloseClick} style={styles.close}>
+          <div onClick={this._handleCloseClick} {...css(styles.close)}>
             <Icon
               size={20}
               style={styles.closeIcon}
               type={this.props.closeIcon}
             />
-            <div style={styles.closeText}>ESC</div>
+            <div {...css(styles.closeText)}>ESC</div>
           </div>
-          <div className='mx-date-picker-full-screen-calendar-wrapper' style={styles.calendarWrapper}>
+          <div
+            className='mx-date-picker-full-screen-calendar-wrapper'
+            {...css(styles.calendarWrapper)}
+          >
             {this._renderTitle(styles)}
-            <div className='mx-date-picker-full-screen-calendar-header' key='calendarHeader' style={[styles.calendarHeader, { borderBottomStyle: this.props.showDayBorders ? 'solid' : 'none' }, styles.clearFix]}>
+            <div
+              className='mx-date-picker-full-screen-calendar-header'
+              key='calendarHeader'
+              {...css(
+                [styles.calendarHeader, { borderBottomStyle: this.props.showDayBorders ? 'solid' : 'none' }, styles.clearFix]
+              )}
+            >
               <Icon
                 elementProps={{
                   onClick: this._handlePreviousClick
@@ -310,10 +327,10 @@ class DatePickerFullScreen extends React.Component {
                 type='caret-right'
               />
             </div>
-            <div style={styles.calendarContainer}>
+            <div {...css(styles.calendarContainer)}>
               {this._renderMonthTable(styles, currentDate, selectedDate)}
             </div>
-            <div style={styles.clearFix} />
+            <div {...css(styles.clearFix)} />
           </div>
         </div>
       </div>
@@ -523,4 +540,4 @@ class DatePickerFullScreen extends React.Component {
   }
 }
 
-module.exports = Radium(DatePickerFullScreen);
+module.exports = DatePickerFullScreen;
