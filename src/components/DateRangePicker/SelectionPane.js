@@ -95,7 +95,9 @@ class SelectionPane extends React.Component {
       boxLabel: {
         fontFamily: theme.FontFamily,
         fontSize: theme.FontSizes.MEDIUM,
-        color: theme.Colors.GRAY_700
+        color: theme.Colors.GRAY_700,
+        display: 'inline-block',
+        marginTop: theme.Spacing.SMALL
       },
       dateSelectBox: {
         borderColor: theme.Colors.GRAY_300,
@@ -122,7 +124,7 @@ class SelectionPane extends React.Component {
         color: theme.Colors.PRIMARY,
         fontFamily: theme.Fonts.SEMIBOLD,
         fontSize: theme.FontSizes.SMALL,
-        padding: `${theme.Spacing.LARGE}px 0px ${theme.Spacing.SMALL}px ${theme.Spacing.LARGE}px`
+        padding: `${theme.Spacing.LARGE}px 0px ${theme.Spacing.SMALL}px 0px`
       },
       rangeOptions: {
         boxSizing: 'border-box',
