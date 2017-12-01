@@ -310,81 +310,91 @@ class DateRangePicker extends React.Component {
             {this.state.showSelectionPane && (
               <FocusTrap>
                 <div style={styles.optionsWrapper}>
-                  {!this.state.showCalendar && (
-                    <div>
-                      {this.props.showDefaultRanges &&
-                        <SelectionPane
-                          defaultRanges={this.props.defaultRanges}
-                          handleDefaultRangeSelection={this._handleDefaultRangeSelection}
-                          onDateBoxClick={(date, selectedBox) => {
-                            this.setState({
-                              currentDate: date || moment().unix(),
-                              selectedBox,
-                              showCalendar: !isLargeOrMediumWindowSize && true
-                            });
-                          }}
-                          selectedBox={this.state.selectedBox}
-                          selectedEndDate={this.props.selectedEndDate}
-                          selectedStartDate={this.props.selectedStartDate}
-                          styles={styles}
-                          theme={theme}
-                        />
-                      }
-                    </div>
-                  )}
-
-                  {(this.state.showCalendar || isLargeOrMediumWindowSize) && (
-                    <div>
-                      <div style={styles.calendarWrapper}>
-                        <div style={styles.calendarHeader}>
-                          <MonthSelector currentDate={this.state.currentDate} setCurrentDate={(currentDate) => this.setState({ currentDate, focusedDay: currentDate })} />
-                          <YearSelector currentDate={this.state.currentDate} setCurrentDate={(currentDate) => this.setState({ currentDate, focusedDay: currentDate })} />
-
-                        </div>
-                        <div style={styles.calendarWeek}>
-                          {[{ label: 'S', value: 'Sunday' },
-                            { label: 'M', value: 'Monday' },
-                            { label: 'T', value: 'Tuesday' },
-                            { label: 'W', value: 'Wednesday' },
-                            { label: 'T', value: 'Thursday' },
-                            { label: 'F', value: 'Friday' },
-                            { label: 'S', value: 'Saturday' }].map((day) => {
-                              return (
-                                <div key={day.value} style={styles.calendarWeekDay}>
-                                  {day.label}
-                                </div>
-                              );
-                            })}
-                        </div>
-                        <MonthTable
-                          activeSelectDate={this.state.activeSelectDate}
-                          currentDate={this.state.currentDate}
-                          focusedDay={this.state.focusedDay || this.state.currentDate}
-                          getDateRangePosition={this._getDateRangePosition}
-                          handleDateHover={this._handleDateHover}
-                          handleDateSelect={this._handleDateSelect}
-                          handleKeyDown={this._handleDayKeyDown}
-                          isInActiveRange={this._isInActiveRange}
-                          minimumDate={this.props.minimumDate}
-                          selectedEndDate={this.props.selectedEndDate}
-                          selectedStartDate={this.props.selectedStartDate}
-                          styles={styles}
-                        />
-                        {!isLargeOrMediumWindowSize && (
-                          <div style={styles.applyButton}>
-                            <Button
-                              onClick={() => this.setState({ showCalendar: false })}
+                  <div style={styles.column}>
+                    <div style={styles.row}>
+                      {!this.state.showCalendar && (
+                        <div>
+                          {this.props.showDefaultRanges &&
+                            <SelectionPane
+                              defaultRanges={this.props.defaultRanges}
+                              handleDefaultRangeSelection={this._handleDefaultRangeSelection}
+                              onDateBoxClick={(date, selectedBox) => {
+                                this.setState({
+                                  currentDate: date || moment().unix(),
+                                  selectedBox,
+                                  showCalendar: !isLargeOrMediumWindowSize && true
+                                });
+                              }}
+                              selectedBox={this.state.selectedBox}
+                              selectedEndDate={this.props.selectedEndDate}
+                              selectedStartDate={this.props.selectedStartDate}
+                              styles={styles}
                               theme={theme}
-                              type='primary'
-                            >
-                              Apply
-                            </Button>
+                            />
+                          }
+                        </div>
+                      )}
+
+                      {(this.state.showCalendar || isLargeOrMediumWindowSize) && (
+                        <div>
+                          <div style={styles.calendarWrapper}>
+                            <div style={styles.calendarHeader}>
+                              <MonthSelector currentDate={this.state.currentDate} setCurrentDate={(currentDate) => this.setState({ currentDate, focusedDay: currentDate })} />
+                              <YearSelector currentDate={this.state.currentDate} setCurrentDate={(currentDate) => this.setState({ currentDate, focusedDay: currentDate })} />
+
+                            </div>
+                            <div style={styles.calendarWeek}>
+                              {[{ label: 'S', value: 'Sunday' },
+                                { label: 'M', value: 'Monday' },
+                                { label: 'T', value: 'Tuesday' },
+                                { label: 'W', value: 'Wednesday' },
+                                { label: 'T', value: 'Thursday' },
+                                { label: 'F', value: 'Friday' },
+                                { label: 'S', value: 'Saturday' }].map((day) => {
+                                  return (
+                                    <div key={day.value} style={styles.calendarWeekDay}>
+                                      {day.label}
+                                    </div>
+                                  );
+                                })}
+                            </div>
+                            <MonthTable
+                              activeSelectDate={this.state.activeSelectDate}
+                              currentDate={this.state.currentDate}
+                              focusedDay={this.state.focusedDay || this.state.currentDate}
+                              getDateRangePosition={this._getDateRangePosition}
+                              handleDateHover={this._handleDateHover}
+                              handleDateSelect={this._handleDateSelect}
+                              handleKeyDown={this._handleDayKeyDown}
+                              isInActiveRange={this._isInActiveRange}
+                              minimumDate={this.props.minimumDate}
+                              selectedEndDate={this.props.selectedEndDate}
+                              selectedStartDate={this.props.selectedStartDate}
+                              styles={styles}
+                            />
+                            {!isLargeOrMediumWindowSize && (
+                              <div style={styles.applyButton}>
+                                <Button
+                                  onClick={() => this.setState({ showCalendar: false })}
+                                  theme={theme}
+                                  type='primary'
+                                >
+                                  Apply
+                                </Button>
+                              </div>
+                            )}
                           </div>
-                        )}
-                      </div>
+                        </div>
+                      )}
                     </div>
-                  )}
+
+                    <div style={styles.bottomPane}>
+                      <Button type='secondary'>Cancel</Button>
+                      <Button type='primary'>Apply</Button>
+                    </div>
+                  </div>
                 </div>
+
               </FocusTrap>
             )}
           </div>
@@ -419,6 +429,23 @@ class DateRangePicker extends React.Component {
         flexDirection: isLargeOrMediumWindowSize ? 'row' : 'column-reverse'
       },
 
+      bottomPane: {
+        backgroundColor: theme.Colors.GRAY_100,
+        display: 'flex',
+        flexDirection: 'row',
+        padding: theme.Spacing.SMALL,
+        justifyContent: 'flex-end'
+      },
+      column: {
+        display: 'flex',
+        flexDirection: 'column'
+      },
+      row: {
+        display: 'flex',
+        flexDirection: 'row',
+        padding: theme.Spacing.SMALL
+      },
+
       // Selected Date styles
       selectedDateWrapper: {
         alignItems: 'center',
@@ -448,7 +475,6 @@ class DateRangePicker extends React.Component {
         flexDirection: isLargeOrMediumWindowSize ? 'row' : 'column',
         justifyContent: 'center',
         marginTop: isLargeOrMediumWindowSize ? 10 : 5,
-        padding: theme.Spacing.SMALL,
         position: 'absolute',
         left: isLargeOrMediumWindowSize ? '50%' : 0,
         right: isLargeOrMediumWindowSize ? 'auto' : 0,
