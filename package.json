@@ -67,7 +67,9 @@
     "webpack-dev-server": "^1.16.2"
   },
   "jest": {
-    "setupFiles": ["<rootDir>/jest-setup.js"],
+    "setupFiles": [
+      "<rootDir>/jest-setup.js"
+    ],
     "setupTestFrameworkScriptFile": "<rootDir>/node_modules/jest-enzyme/lib/index.js"
   }
 }
