@@ -88,12 +88,18 @@ class DateRangePicker extends React.Component {
     showDefaultRanges: false
   };
 
-  state = {
-    currentDate: this.props.selectedEndDate || moment().unix(),
-    focusedDay: this.props.selectedEndDate || moment().unix(),
-    selectedBox: SelectedBox.FROM,
-    showSelectionPane: false
-  };
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      currentDate: props.selectedEndDate || moment().unix(),
+      focusedDay: props.selectedEndDate || moment().unix(),
+      selectedBox: SelectedBox.FROM,
+      selectedStartDate: this.props.selectedStartDate,
+      selectedEndDate: this.props.selectedEndDate,
+      showSelectionPane: false
+    };
+  }
 
   componentDidMount () {
     deprecatePrimaryColor(this.props);
@@ -133,8 +139,8 @@ class DateRangePicker extends React.Component {
       focusedDay: date
     });
 
-    let endDate = this.props.selectedEndDate;
-    let startDate = this.props.selectedStartDate;
+    let endDate = this.state.selectedEndDate;
+    let startDate = this.state.selectedStartDate;
 
     if (this.state.selectedBox === SelectedBox.FROM) {
       startDate = date;
@@ -149,9 +155,17 @@ class DateRangePicker extends React.Component {
     const modifiedRangeCompleteButDatesInversed = startDate && endDate && this._endDateIsBeforeStartDate(startDate, endDate);
 
     if (modifiedRangeCompleteButDatesInversed) {
-      this.props.onDateSelect(endDate, startDate);
+      // this.props.onDateSelect(endDate, startDate);
+      this.setState({
+        selectedStartDate: endDate,
+        selectedEndDate: startDate
+      });
     } else {
-      this.props.onDateSelect(startDate, endDate);
+      // this.props.onDateSelect(startDate, endDate);
+      this.setState({
+        selectedStartDate: startDate,
+        selectedEndDate: endDate
+      });
     }
 
     if (startDate && endDate && this.props.closeCalendarOnRangeSelect) {
@@ -160,8 +174,11 @@ class DateRangePicker extends React.Component {
   };
 
   _handleDefaultRangeSelection = (range) => {
-    this.props.onDateSelect(range.getStartDate(), range.getEndDate(), range.displayValue);
-    this.setState({ focusedDay: range.getEndDate() });
+    this.setState({
+      selectedStartDate: range.getStartDate(),
+      selectedEndDate: range.getEndDate(),
+      focusedDay: range.getEndDate()
+    });
 
     if (this.props.closeCalendarOnRangeSelect) {
       this._handleScrimClick();
@@ -291,7 +308,7 @@ class DateRangePicker extends React.Component {
             />
           ) : null}
           <div style={styles.selectedDateText}>
-            {this.props.selectedStartDate && this.props.selectedEndDate ? (
+            {this.state.selectedStartDate && this.state.selectedEndDate ? (
               <div>
                 <span>{moment.unix(this.props.selectedStartDate).format(this._getDateFormat(isLargeOrMediumWindowSize))}</span>
                 <span> - </span>
@@ -326,8 +343,8 @@ class DateRangePicker extends React.Component {
                                 });
                               }}
                               selectedBox={this.state.selectedBox}
-                              selectedEndDate={this.props.selectedEndDate}
-                              selectedStartDate={this.props.selectedStartDate}
+                              selectedEndDate={this.state.selectedEndDate}
+                              selectedStartDate={this.state.selectedStartDate}
                               styles={styles}
                               theme={theme}
                             />
@@ -368,8 +385,8 @@ class DateRangePicker extends React.Component {
                               handleKeyDown={this._handleDayKeyDown}
                               isInActiveRange={this._isInActiveRange}
                               minimumDate={this.props.minimumDate}
-                              selectedEndDate={this.props.selectedEndDate}
-                              selectedStartDate={this.props.selectedStartDate}
+                              selectedEndDate={this.state.selectedEndDate}
+                              selectedStartDate={this.state.selectedStartDate}
                               styles={styles}
                             />
                             {!isLargeOrMediumWindowSize && (
@@ -389,8 +406,16 @@ class DateRangePicker extends React.Component {
                     </div>
 
                     <div style={styles.bottomPane}>
-                      <Button type='secondary'>Cancel</Button>
-                      <Button type='primary'>Apply</Button>
+                      <Button onClick={() => this._handleScrimClick()} type='secondary'>Cancel</Button>
+                      <Button
+                        onClick={() => {
+                          this.props.onDateSelect(this.state.selectedEndDate, this.state.selectedStartDate);
+                          this._handleScrimClick();
+                        }}
+                        type='primary'
+                      >
+                        Apply
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -458,7 +483,7 @@ class DateRangePicker extends React.Component {
         marginRight: 5
       },
       selectedDateText: {
-        color: (this.props.selectedStartDate && this.props.selectedEndDate) ? theme.Colors.GRAY_700 : theme.Colors.GRAY_500
+        color: (this.state.selectedStartDate && this.state.selectedEndDate) ? theme.Colors.GRAY_700 : theme.Colors.GRAY_500
       },
       selectedDateCaret: {
         fill: this.state.showSelectionPane ? theme.Colors.PRIMARY : theme.Colors.GRAY_500
