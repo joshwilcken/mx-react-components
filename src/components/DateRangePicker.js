@@ -308,7 +308,8 @@ class DateRangePicker extends React.Component {
             />
           ) : null}
           <div style={styles.selectedDateText}>
-            {this.state.selectedStartDate && this.state.selectedEndDate ? (
+            {/*These below are based on props, not state, as it displays when the date picker is closed - should match the parent*/}
+            {this.props.selectedStartDate && this.props.selectedEndDate ? (
               <div>
                 <span>{moment.unix(this.props.selectedStartDate).format(this._getDateFormat(isLargeOrMediumWindowSize))}</span>
                 <span> - </span>
@@ -409,7 +410,7 @@ class DateRangePicker extends React.Component {
                       <Button onClick={() => this._handleScrimClick()} type='secondary'>Cancel</Button>
                       <Button
                         onClick={() => {
-                          this.props.onDateSelect(this.state.selectedEndDate, this.state.selectedStartDate);
+                          this.props.onDateSelect(this.state.selectedStartDate, this.state.selectedEndDate);
                           this._handleScrimClick();
                         }}
                         type='primary'
