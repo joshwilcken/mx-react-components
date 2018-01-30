@@ -15,17 +15,19 @@ const { deprecatePrimaryColor } = require('../utils/Deprecation');
 class Modal extends React.Component {
   static propTypes = {
     'aria-label': PropTypes.string,
-    buttons: PropTypes.arrayOf(PropTypes.shape({
-      actionText: PropTypes.string,
-      className: PropTypes.string,
-      isActive: PropTypes.bool,
-      icon: PropTypes.string,
-      label: PropTypes.string,
-      onClick: PropTypes.func,
-      primaryColor: PropTypes.string,
-      style: PropTypes.object,
-      type: PropTypes.oneOf(['primary', 'secondary'])
-    })),
+    buttons: PropTypes.arrayOf(
+      PropTypes.shape({
+        actionText: PropTypes.string,
+        className: PropTypes.string,
+        isActive: PropTypes.bool,
+        icon: PropTypes.string,
+        label: PropTypes.string,
+        onClick: PropTypes.func,
+        primaryColor: PropTypes.string,
+        style: PropTypes.object,
+        type: PropTypes.oneOf(['primary', 'secondary'])
+      })
+    ),
     color: PropTypes.string,
     contentStyle: PropTypes.object,
     footerContent: PropTypes.node,
@@ -66,21 +68,22 @@ class Modal extends React.Component {
   componentDidMount () {
     deprecatePrimaryColor(this.props, 'color');
 
-    this._modalContent.focus();
     /*eslint-disable */
     if (this.props.hasOwnProperty('isOpen')) {
-      console.warn('WARNING: The prop "isOpen" is deprecated in this version of the component. Please handle Modal opening from its parent.');
+      console.warn(
+        'WARNING: The prop "isOpen" is deprecated in this version of the component. Please handle Modal opening from its parent.'
+      );
     }
     /*eslint-enable */
   }
 
-  _handleTooltipToggle = (show) => {
+  _handleTooltipToggle = show => {
     this.setState({
       showTooltip: show
     });
   };
 
-  _renderTitleBar = (styles) => {
+  _renderTitleBar = styles => {
     if (this.props.showTitleBar) {
       return (
         <div className='mx-modal-title-bar' style={styles.titleBar}>
@@ -95,7 +98,10 @@ class Modal extends React.Component {
   _renderFooter = (styles, theme) => {
     if (this.props.showFooter) {
       return (
-        <div className='mx-modal-footer' style={Object.assign({}, styles.footer, this.props.footerStyle)}>
+        <div
+          className='mx-modal-footer'
+          style={Object.assign({}, styles.footer, this.props.footerStyle)}
+        >
           {this._renderTooltipIconAndLabel(styles, theme)}
           {this._renderFooterContent(styles)}
           <div className='mx-modal-buttons'>
@@ -124,7 +130,7 @@ class Modal extends React.Component {
     }
   };
 
-  _renderFooterContent = (styles) => {
+  _renderFooterContent = styles => {
     return (
       <div className='mx-modal-footer-content' style={styles.footerContent}>
         {this.props.footerContent}
@@ -136,10 +142,18 @@ class Modal extends React.Component {
     if (this.state.showTooltip) {
       return (
         <div style={styles.tooltip}>
-          <div className='mx-modal-tooltip-title' style={Object.assign({}, styles.tooltipTitle, { color: theme.Colors.PRIMARY })}>
+          <div
+            className='mx-modal-tooltip-title'
+            style={Object.assign({}, styles.tooltipTitle, {
+              color: theme.Colors.PRIMARY
+            })}
+          >
             {this.props.tooltipTitle}
           </div>
-          <div className='mx-modal-tooltip-content' style={styles.tooltipContent}>
+          <div
+            className='mx-modal-tooltip-content'
+            style={styles.tooltipContent}
+          >
             {this.props.tooltip}
           </div>
         </div>
@@ -167,7 +181,9 @@ class Modal extends React.Component {
             className='mx-modal-tooltip-label-text'
             onMouseOut={this._handleTooltipToggle.bind(null, false)}
             onMouseOver={this._handleTooltipToggle.bind(null, true)}
-            style={Object.assign({}, styles.tooltipLabelText, { color: theme.Colors.PRIMARY })}
+            style={Object.assign({}, styles.tooltipLabelText, {
+              color: theme.Colors.PRIMARY
+            })}
           >
             {this.props.tooltipLabel}
           </span>
@@ -184,8 +200,24 @@ class Modal extends React.Component {
 
     return (
       <FocusTrap focusTrapOptions={{ clickOutsideDeactivates: true }}>
-        <div className='mx-modal' style={Object.assign({}, styles.scrim, this.props.isRelative && styles.relative)}>
-          <div className='mx-modal-scrim' onClick={this.props.onRequestClose} style={Object.assign({}, styles.scrim, styles.overlay, this.props.isRelative && styles.relative)} />
+        <div
+          className='mx-modal'
+          style={Object.assign(
+            {},
+            styles.scrim,
+            this.props.isRelative && styles.relative
+          )}
+        >
+          <div
+            className='mx-modal-scrim'
+            onClick={this.props.onRequestClose}
+            style={Object.assign(
+              {},
+              styles.scrim,
+              styles.overlay,
+              this.props.isRelative && styles.relative
+            )}
+          />
           <div
             className='mx-modal-container'
             style={Object.assign({}, styles.container, this.props.style)}
@@ -194,9 +226,7 @@ class Modal extends React.Component {
             <div
               aria-label={this.props['aria-label']}
               className='mx-modal-content'
-              ref={ref => this._modalContent = ref}
               style={Object.assign({}, styles.content, this.props.contentStyle)}
-              tabIndex={0}
             >
               {this.props.children}
               {this._renderTooltip(styles, theme)}
@@ -226,114 +256,120 @@ class Modal extends React.Component {
   }
 
   styles = theme => {
-    return _merge({}, {
-      scrim: {
-        zIndex: 1000,
-        position: 'fixed',
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0,
-        textAlign: 'center'
+    return _merge(
+      {},
+      {
+        scrim: {
+          zIndex: 1000,
+          position: 'fixed',
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          textAlign: 'center'
+        },
+        relative: {
+          position: 'absolute'
+        },
+        overlay: {
+          backgroundColor: this.props.showScrim ?
+            theme.Colors.SCRIM :
+            'transparent'
+        },
+        close: {
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          margin: '-12px -12px 0 0',
+          cursor: 'pointer',
+          border: 'none',
+          backgroundColor: 'transparent'
+        },
+        closeIcon: {
+          color: theme.Colors.GRAY_700
+        },
+        container: {
+          fontFamily: theme.FontFamily,
+          boxSizing: 'border-box',
+          position: 'relative',
+          zIndex: 1001,
+          backgroundColor: theme.Colors.WHITE,
+          boxShadow: theme.ShadowHigh,
+          borderRadius: 2,
+          top: 20,
+          maxWidth: 'calc(100% - 40px)',
+          display: 'inline-block',
+          textAlign: 'left'
+        },
+        titleBar: {
+          backgroundColor: theme.Colors.GRAY_100,
+          borderTopLeftRadius: 2,
+          borderTopRightRadius: 2,
+          padding: '15px 20px',
+          color: theme.Colors.GRAY_500,
+          fontSize: theme.FontSizes.SMALL,
+          textTransform: 'uppercase',
+          letterSpacing: 1
+        },
+        content: {
+          position: 'relative',
+          maxHeight: 'calc(100% - 140px)',
+          overflow: 'auto'
+        },
+        footer: {
+          backgroundColor: theme.Colors.GRAY_100,
+          borderBottomLeftRadius: 2,
+          borderBottomRightRadius: 2,
+          padding: '10px 20px',
+          display: 'flex',
+          justifyContent: 'space-between'
+        },
+        footerContent: {
+          padding: '5px 0',
+          textAlign: 'left'
+        },
+        tooltipLabel: {
+          padding: '5px 0'
+        },
+        tooltipLabelText: {
+          fontSize: theme.FontSizes.SMALL
+        },
+        tooltip: {
+          backgroundColor: theme.Colors.GRAY_100,
+          borderColor: theme.Colors.GRAY_300,
+          borderStyle: 'solid',
+          borderWidth: 1,
+          boxSizing: 'border-box',
+          bottom: 10,
+          left: 10,
+          position: 'absolute',
+          width: 250,
+          maxWidth: '100%',
+          padding: 10
+        },
+        tooltipTitle: {
+          fontSize: theme.FontSizes.MEDIUM,
+          marginBottom: 5
+        },
+        tooltipContent: {
+          color: theme.Colors.GRAY_500,
+          fontSize: theme.FontSizes.SMALL,
+          lineHeight: '1.5em',
+          textAlign: 'left'
+        },
+        buttons: {
+          textAlign: 'right'
+        },
+        button: {
+          marginLeft: 5
+        },
+        small: {
+          width: 400,
+          textAlign: 'center'
+        }
       },
-      relative: {
-        position: 'absolute'
-      },
-      overlay: {
-        backgroundColor: this.props.showScrim ? theme.Colors.SCRIM : 'transparent'
-      },
-      close: {
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        margin: '-12px -12px 0 0',
-        cursor: 'pointer',
-        border: 'none',
-        backgroundColor: 'transparent'
-      },
-      closeIcon: {
-        color: theme.Colors.GRAY_700
-      },
-      container: {
-        fontFamily: theme.FontFamily,
-        boxSizing: 'border-box',
-        position: 'relative',
-        zIndex: 1001,
-        backgroundColor: theme.Colors.WHITE,
-        boxShadow: theme.ShadowHigh,
-        borderRadius: 2,
-        top: 20,
-        maxWidth: 'calc(100% - 40px)',
-        display: 'inline-block',
-        textAlign: 'left'
-      },
-      titleBar: {
-        backgroundColor: theme.Colors.GRAY_100,
-        borderTopLeftRadius: 2,
-        borderTopRightRadius: 2,
-        padding: '15px 20px',
-        color: theme.Colors.GRAY_500,
-        fontSize: theme.FontSizes.SMALL,
-        textTransform: 'uppercase',
-        letterSpacing: 1
-      },
-      content: {
-        position: 'relative',
-        maxHeight: 'calc(100% - 140px)',
-        overflow: 'auto'
-      },
-      footer: {
-        backgroundColor: theme.Colors.GRAY_100,
-        borderBottomLeftRadius: 2,
-        borderBottomRightRadius: 2,
-        padding: '10px 20px',
-        display: 'flex',
-        justifyContent: 'space-between'
-      },
-      footerContent: {
-        padding: '5px 0',
-        textAlign: 'left'
-      },
-      tooltipLabel: {
-        padding: '5px 0'
-      },
-      tooltipLabelText: {
-        fontSize: theme.FontSizes.SMALL
-      },
-      tooltip: {
-        backgroundColor: theme.Colors.GRAY_100,
-        borderColor: theme.Colors.GRAY_300,
-        borderStyle: 'solid',
-        borderWidth: 1,
-        boxSizing: 'border-box',
-        bottom: 10,
-        left: 10,
-        position: 'absolute',
-        width: 250,
-        maxWidth: '100%',
-        padding: 10
-      },
-      tooltipTitle: {
-        fontSize: theme.FontSizes.MEDIUM,
-        marginBottom: 5
-      },
-      tooltipContent: {
-        color: theme.Colors.GRAY_500,
-        fontSize: theme.FontSizes.SMALL,
-        lineHeight: '1.5em',
-        textAlign: 'left'
-      },
-      buttons: {
-        textAlign: 'right'
-      },
-      button: {
-        marginLeft: 5
-      },
-      small: {
-        width: 400,
-        textAlign: 'center'
-      }
-    }, this.props.styles);
+      this.props.styles
+    );
   };
 }
 
